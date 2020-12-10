@@ -5,11 +5,11 @@ import IO.ReadFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Problem2 {
+public class DayProblem2 {
 
     public static void main(String[] args) {
 
-        List<Integer> lines = ReadFile.readFile("day1_input2.in").stream()
+        List<Integer> lines = ReadFile.readFile("day1_input.in").stream()
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
