@@ -5,7 +5,7 @@ import IO.ReadFile;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DayProblem2 {
+public class Day1Problem2 {
 
     public static void main(String[] args) {
 
