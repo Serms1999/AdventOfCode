@@ -1,12 +1,11 @@
 package day1;
 
-
 import IO.ReadFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class problem1 {
+public class Problem1 {
 
     public static void main(String[] args) {
 
@@ -24,6 +23,6 @@ public class problem1 {
                 }
 
         if (i == lines.size())
-            System.out.println("No se ha encontrado");
+            System.out.println("Not Found");
     }
 }
