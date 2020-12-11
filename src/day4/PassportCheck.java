@@ -7,13 +7,13 @@ import java.util.regex.Pattern;
 
 public class PassportCheck {
 
-    private static final String RE_BYR = "[0-9]{4}";
-    private static final String RE_IYR = "[0-9]{4}";
-    private static final String RE_EYR = "[0-9]{4}";
-    private static final String RE_HGT = "(([0-9]{3})(cm)|([0-9]{2})(in))";
-    private static final String RE_HCL = "#([0-9]|[a-f]){6}";
+    private static final String RE_BYR = "^\\d{4}$";
+    private static final String RE_IYR = "^\\d{4}$";
+    private static final String RE_EYR = "^\\d{4}$";
+    private static final String RE_HGT = "((\\d{3})(cm)|(\\d{2})(in))";
+    private static final String RE_HCL = "#(\\d|[a-f]){6}";
     private static final String RE_ECL = "amb|blu|brn|gry|grn|hzl|oth";
-    private static final String RE_PID = "[0-9]{9}";
+    private static final String RE_PID = "^\\d{9}$";
     private static final String RE_CID = ".*";
 
     private static final byte DATA_BYR = 1;

@@ -38,7 +38,7 @@ public class Day4Problem2 {
                 }
                 i++;
             } while (i < lines.size() && !(line = lines.get(i)).equals(""));
-            if(p.getValid()) valid++;
+            if(ok && p.getValid()) valid++;
         }
         System.out.println(valid);
     }
