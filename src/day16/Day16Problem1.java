@@ -20,21 +20,21 @@ public class Day16Problem1 {
 
     private static boolean checkNumber(int num) {
 
+        boolean aux2 = false;
         for (Pair[] aux : ranges) {
 
-            boolean aux2 = false;
             for (int i = 0; i < aux.length; i++) {
 
                 aux2 = aux2 || checkNumberInPair(aux[i], num);
             }
-            if (!aux2) return false;
+            if (aux2) break;
         }
-        return true;
+        return aux2;
     }
 
     public static void main(String[] args) {
 
-        List<String> lines = ReadFile.readFile("prueba.in");
+        List<String> lines = ReadFile.readFile("day16_input.in");
         List<Integer> invalids = new ArrayList<>();
 
         Pattern pat = Pattern.compile(RE_RANGE);
@@ -57,7 +57,7 @@ public class Day16Problem1 {
                 ranges.add(pairs);
             }
         }
-        for (String s : lines.subList(lines.indexOf("nearby tickets:") + 1, lines.size() - 1)) {
+        for (String s : lines.subList(lines.indexOf("nearby tickets:") + 1, lines.size())) {
 
             aux = Arrays.stream(s.split(","))
                     .map(Integer::parseInt)
