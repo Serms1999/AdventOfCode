@@ -23,21 +23,21 @@ def part1(input_str: str) -> int:
 
 def part2(input_str: str) -> int:
     ages = np.array(input_str.split(','), dtype=int)
-    cnt = [0] * 9
 
-    for s in ages:
-        cnt[s] += 1
+    count_repeated = np.zeros(9, dtype=int)
+    for index, value in np.asarray(np.unique(ages, return_counts=True)).T:
+        count_repeated[index] = value
 
     for i in range(256):
-        new_fish = cnt[0]
+        new_fish = count_repeated[0]
 
         for a in range(0, 8):
-            cnt[a] = cnt[a + 1]
+            count_repeated[a] = count_repeated[a + 1]
 
-        cnt[8] = new_fish
-        cnt[6] += new_fish
+        count_repeated[8] = new_fish
+        count_repeated[6] += new_fish
 
-    return sum(cnt)
+    return sum(count_repeated)
 
 
 def main():
