@@ -39,6 +39,7 @@ def part2(input_str: str) -> int:
 
     return sum(cnt)
 
+
 def main():
     input_lines = IO.read_input_lines()
     print(f'Part one solution: {part1(input_lines[0])}')
