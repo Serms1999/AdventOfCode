@@ -1,4 +1,4 @@
-import IO.IO_module as IO
+from IO.IO_module import read_input_lines
 import numpy as np
 
 
@@ -41,7 +41,7 @@ def part2(input_str: str) -> int:
 
 
 def main():
-    input_lines = IO.read_input_lines()
+    input_lines = read_input_lines(root_file=__file__)
     print(f'Part one solution: {part1(input_lines[0])}')
     print(f'Part two solution: {part2(input_lines[0])}')
 

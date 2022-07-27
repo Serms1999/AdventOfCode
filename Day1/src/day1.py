@@ -1,5 +1,12 @@
-import IO.IO_module as IO
+from IO.IO_module import read_input_lines
+import os
 import numpy as np
+
+
+def read_input() -> list:
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_path, 'input')
+    return read_input_lines(file_path)
 
 
 def part1(measurements: np.ndarray) -> int:
@@ -17,7 +24,7 @@ def part2(measurements: np.ndarray):
 
 
 def main():
-    input_lines = IO.read_input_lines()
+    input_lines = read_input_lines(root_file=__file__)
     measurements = np.array([int(n) for n in input_lines])
     print(f'Part one solution: {part1(measurements)}')
     print(f'Part two solution: {part2(measurements)}')
