@@ -1,1 +1,1 @@
-# Advent of Code 2021 Day 11 solution
+# Advent of Code 2021 Day 12 solution
