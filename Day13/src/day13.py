@@ -1,6 +1,5 @@
-import numpy as np
-
 from IO.IO_module import read_input_lines
+import numpy as np
 
 matrix = 0
 
