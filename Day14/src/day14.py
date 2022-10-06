@@ -1,5 +1,3 @@
-import collections
-
 from IO.IO_module import read_input_lines
 
 
