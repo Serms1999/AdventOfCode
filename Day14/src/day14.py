@@ -1,3 +1,5 @@
+import collections
+
 from IO.IO_module import read_input_lines
 
 
@@ -18,15 +20,15 @@ def read_rules(rules_list: list) -> dict:
 
 def initialize_pairs(template: str) -> None:
     global current_pairs
-    current_pairs = {}
+    current_pairs.clear()
     for i in range(0, len(template) - 1):
         pair = template[i:i + 2]
-        current_pairs[pair] = letter_count.get(pair, 0) + 1
+        current_pairs[pair] = current_pairs.get(pair, 0) + 1
 
 
 def initialize_letters(template: str) -> None:
     global letter_count
-    letter_count = {}
+    letter_count.clear()
     for letter in template:
         letter_count[letter] = letter_count.get(letter, 0) + 1
 
@@ -40,10 +42,9 @@ def part1(input_lines: list) -> int:
 
     for _ in range(10):
         aux_dict = {}
-        while len(current_pairs) > 0:
-            item, value = current_pairs.popitem()
+        for item, value in current_pairs.items():
             new_letter = rules[item]
-            for new_pair in [f'{item[0]}{new_letter}', f'{new_letter}{item[1]}']:
+            for new_pair in [item[0] + new_letter, new_letter + item[1]]:
                 aux_dict[new_pair] = aux_dict.get(new_pair, 0) + value
 
             letter_count[new_letter] = letter_count.get(new_letter, 0) + value
@@ -62,8 +63,7 @@ def part2(input_lines: list) -> int:
 
     for _ in range(40):
         aux_dict = {}
-        while len(current_pairs) > 0:
-            item, value = current_pairs.popitem()
+        for item, value in current_pairs.items():
             new_letter = rules[item]
             for new_pair in [f'{item[0]}{new_letter}', f'{new_letter}{item[1]}']:
                 aux_dict[new_pair] = aux_dict.get(new_pair, 0) + value
