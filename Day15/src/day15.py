@@ -1,9 +1,53 @@
 from IO.IO_module import read_input_lines
-import numpy as np
+import math
+
+
+def get_adjacent(node: tuple) -> list:
+    x, y = node
+    possibilities = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if i == j and i == 0:
+                continue
+            possibilities += [(x + i, y + j)]
+
+    return possibilities
 
 
 def part1(input_lines: list) -> int:
-    cavern = np.array([list(row) for row in input_lines], dtype=int)
+    nodes = {}
+    for i, row in enumerate(input_lines):
+        for j, item in enumerate(row):
+            nodes[(i, j)] = int(item)
+
+    max_x, max_y = max(nodes)
+    best_set = {}
+    open_set = [((0, 0), 0)]
+
+    while open_set:
+        min_node = (-1, -1)
+        min_cost = math.inf
+        for node, cost in open_set:
+            if cost < min_cost:
+                min_node = node
+                min_cost = cost
+
+        open_set.remove((min_node, min_cost))
+
+        if min_node in best_set and min_cost >= best_set[min_node]:
+            continue
+        else:
+            best_set[min_node] = min_cost
+
+        print(f'{best_set}')
+
+        if min_node == (max_x, max_y):
+            return min_cost
+
+        for adj in get_adjacent(min_node):
+            if adj not in nodes:
+                continue
+            open_set.append((adj, nodes[adj] + min_cost))
 
     return 0
 
