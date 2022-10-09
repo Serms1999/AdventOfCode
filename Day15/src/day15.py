@@ -4,14 +4,8 @@ import math
 
 def get_adjacent(node: tuple) -> list:
     x, y = node
-    possibilities = []
-    for i in range(-1, 2):
-        for j in range(-1, 2):
-            if i == j and i == 0:
-                continue
-            possibilities += [(x + i, y + j)]
-
-    return possibilities
+    return [(x, y - 1), (x - 1, y),
+            (x + 1, y), (x, y + 1)]
 
 
 def part1(input_lines: list) -> int:
@@ -38,8 +32,6 @@ def part1(input_lines: list) -> int:
             continue
         else:
             best_set[min_node] = min_cost
-
-        print(f'{best_set}')
 
         if min_node == (max_x, max_y):
             return min_cost
