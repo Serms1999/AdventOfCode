@@ -116,4 +116,6 @@ def get_calibration_sum(lines: list[str]) -> int:
     return sum([map_lines_into_numbers(map_spelled_numbers(line)) for line in lines])
 ```
 
+The answer is `54824`.
+
 </details>
