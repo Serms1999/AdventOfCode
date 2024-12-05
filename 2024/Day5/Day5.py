@@ -4,9 +4,9 @@ from unittest import TestCase, TestResult, TestLoader, TextTestRunner
 
 class PartialTests(TestCase):
     def test_part1(self):
-        self.assertEqual(check_pages(read_input_lines(file_name='test_input_part1')), 143)
+        self.assertEqual(check_pages(read_input_lines(file_name='test_input')), 143)
     def test_part2(self):
-        self.assertEqual(fix_pages(read_input_lines(file_name='test_input_part1')), 123)
+        self.assertEqual(fix_pages(read_input_lines(file_name='test_input')), 123)
 
 
 def read_rules(lines: List[str]) -> Tuple[Dict[int, List[Tuple[int, int]]], int]:
@@ -85,7 +85,7 @@ def main() -> None:
         input_lines: List[str] = read_input_lines(file_name='input')
         format_output(
             output_part1=f'Middle pages sum: {check_pages(input_lines)}',
-            output_part2=f'Middle pages sum: {fix_pages(input_lines)}'
+            output_part2=f'Middle pages sum fixed: {fix_pages(input_lines)}'
         )
 
 
