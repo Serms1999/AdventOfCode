@@ -1,5 +1,3 @@
-from numpy.random import vonmises
-
 from IO import read_input_lines, format_output
 from typing import List, Set, Tuple, Dict
 from unittest import TestCase, TestResult, TestLoader, TextTestRunner
