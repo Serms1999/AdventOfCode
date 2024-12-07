@@ -12,7 +12,7 @@ class PartialTests(TestCase):
 
 
 def check_calibration(numbers: List[int], goal_number: int, operations: Tuple[str, ...]) -> bool:
-    operations = list(operations)
+    operations: List[str] = list(operations)
     while operations:
         num1 = numbers.pop(0)
         num2 = numbers.pop(0)
