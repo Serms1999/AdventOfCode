@@ -12,21 +12,16 @@ class PartialTests(TestCase):
 
 
 def check_calibration(numbers: List[int], goal_number: int, operations: Tuple[str, ...]) -> bool:
-    operations: List[str] = list(operations)
-    while operations:
-        num1 = numbers.pop(0)
-        num2 = numbers.pop(0)
-        operation = operations.pop(0)
-        result = -1
-        if operation == '+':
-            result = num1 + num2
-        elif operation == '*':
-            result = num1 * num2
-        elif operation == '||':
-            result = int(f'{num1}{num2}')
-        numbers.insert(0, result)
+    result: int = numbers[0]
+    for index, op in enumerate(operations):
+        if op == '+':
+            result += numbers[index + 1]
+        elif op == '*':
+            result *= numbers[index + 1]
+        elif op == '||':
+            result = int(f'{result}{numbers[index + 1]}')
 
-    return goal_number == numbers[0]
+    return goal_number == result
 
 
 def get_calibrations(input_lines: List[str], part: int) -> int:
