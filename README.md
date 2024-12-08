@@ -10,4 +10,4 @@ Personal solutions to the Advent of Code puzzles.
 | [2021](2021) | 14/25          | 29          | [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)       |
 | [2022](2022) | 16/25          | 32          | [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)       |
 | [2023](2023) | 2/25           | 4           | [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)       |
-| [2024](2024) | 7/25           | 14          | [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)       |
+| [2024](2024) | 8/25           | 16          | [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)       |
