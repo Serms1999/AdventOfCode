@@ -1,6 +1,6 @@
 from IO import read_input_lines, format_output
 from unittest import TestCase, TestResult, TestLoader, TextTestRunner
-from functools import lru_cache
+from functools import cache
 
 
 class PartialTests(TestCase):
@@ -9,7 +9,7 @@ class PartialTests(TestCase):
         self.assertEqual(get_stones(input_lines=test_input_lines, blinks=25), 55312)
 
 
-@lru_cache(maxsize=None)
+@cache
 def simulate_blink(stone_value: int, remaining_blinks: int) -> int:
     if remaining_blinks == 0:
         return 1
