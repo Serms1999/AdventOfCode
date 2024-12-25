@@ -16,7 +16,7 @@ def parse_graph(graph_str: list) -> (np.ndarray, list, tuple):
             src.add((row, idx))
             aux_list[idx] = 'a'
         if 'E' in aux_list:
-            idx = aux_list.index('E')
+            idx = aux_list.first_index('E')
             dst = (row, idx)
             aux_list[idx] = 'z'
 

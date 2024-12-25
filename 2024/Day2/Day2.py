@@ -1,5 +1,5 @@
 from unittest import TestCase, TestResult, TestLoader, TextTestRunner
-from typing import List
+from collections.abc import Sequence, Iterable
 from IO import read_input_lines, format_output
 
 
@@ -10,7 +10,7 @@ class PartialTests(TestCase):
         self.assertEqual(check_safe_levels_with_tolerance(read_input_lines(file_name='test_input')), 4)
 
 
-def check_report_safety(report: List[str]) -> bool:
+def check_report_safety(report: Sequence[str]) -> bool:
     num1, num2 = int(report[0]), int(report[1])
     if num1 > num2 and num1 - num2 <= 3:
         # Case 1: num1 is greater than num2
@@ -33,7 +33,7 @@ def check_report_safety(report: List[str]) -> bool:
     return True
 
 
-def check_safe_levels(lines: List[str]) -> int:
+def check_safe_levels(lines: Iterable[str]) -> int:
     safe_levels: int = 0
 
     for line in lines:
@@ -42,11 +42,11 @@ def check_safe_levels(lines: List[str]) -> int:
     return safe_levels
 
 
-def check_safe_levels_with_tolerance(lines: List[str]) -> int:
+def check_safe_levels_with_tolerance(lines: Iterable[str]) -> int:
     safe_levels: int = 0
 
     for line in lines:
-        numbers: List[str] = line.split()
+        numbers: list[str] = line.split()
         safe: bool = check_report_safety(numbers)
         removed_index: int = 0
         while not safe and removed_index < len(numbers):
@@ -61,7 +61,7 @@ def check_safe_levels_with_tolerance(lines: List[str]) -> int:
 def main() -> None:
     result: TestResult = TextTestRunner().run(TestLoader().loadTestsFromTestCase(PartialTests))
     if result.wasSuccessful():
-        input_lines: List[str] = read_input_lines(file_name='input')
+        input_lines: list[str] = read_input_lines(file_name='input')
         format_output(
             output_part1=f'Safe levels: {check_safe_levels(input_lines)}',
             output_part2=f'Safe levels with tolerance: {check_safe_levels_with_tolerance(input_lines)}'

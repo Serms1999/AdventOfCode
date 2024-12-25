@@ -1,5 +1,4 @@
 from unittest import TestCase, TestResult, TestLoader, TextTestRunner
-from typing import List
 from IO import read_input_lines, format_output
 from collections import Counter
 
@@ -11,16 +10,16 @@ class PartialTests(TestCase):
     def test_part2(self):
         self.assertEqual(similarity_score(read_input_lines(file_name='test_input_part2')), 31)
 
-def split_lists(lines: List[str]) -> List[List[int]]:
-    lists: List[List[int]] = [[], []]
+def split_lists(lines: list[str]) -> list[list[int]]:
+    lists: list[list[int]] = [[], []]
     for line in lines:
         num1, num2 = map(int, line.split())
         lists[0].append(num1)
         lists[1].append(num2)
     return lists
 
-def lists_distances(lines: List[str]) -> int:
-    lists: List[List[int]] = split_lists(lines)
+def lists_distances(lines: list[str]) -> int:
+    lists: list[list[int]] = split_lists(lines)
     lists[0].sort()
     lists[1].sort()
 
@@ -31,8 +30,8 @@ def lists_distances(lines: List[str]) -> int:
     return result
 
 
-def similarity_score(lines: List[str]) -> int:
-    lists: List[List[int]] = split_lists(lines)
+def similarity_score(lines: list[str]) -> int:
+    lists: list[list[int]] = split_lists(lines)
     counts_list1: Counter[int] = Counter(lists[1])
 
     score: int = 0
@@ -45,7 +44,7 @@ def similarity_score(lines: List[str]) -> int:
 def main() -> None:
     result: TestResult = TextTestRunner().run(TestLoader().loadTestsFromTestCase(PartialTests))
     if result.wasSuccessful():
-        input_lines: List[str] = read_input_lines(file_name='input')
+        input_lines: list[str] = read_input_lines(file_name='input')
         format_output(
             output_part1=f'Total distance: {lists_distances(input_lines)}',
             output_part2=f'Similarity score: {similarity_score(input_lines)}'
