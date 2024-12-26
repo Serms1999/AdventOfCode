@@ -84,8 +84,8 @@ def check_robots_aligned(robots: list[Robot], number_of_robots: int = 10) -> boo
 
     robot_positions: list[tuple[int, int]] = sorted(map(lambda robot: robot.position(), robots))
 
-    x_groups = {}
-    y_groups = {}
+    x_groups: dict[int, list[int]] = {}
+    y_groups: dict[int, list[int]] = {}
     for x, y in robot_positions:
         x_groups.setdefault(x, []).append(y)
         y_groups.setdefault(y, []).append(x)
