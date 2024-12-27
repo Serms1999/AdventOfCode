@@ -49,10 +49,6 @@ class Warehouse:
                     self.objects[(i, j)] = obj
 
 
-    def __getitem__(self, item: tuple[int, int]) -> str:
-        return self.objects.get(item, '.')
-
-
     def can_move(self, object_to_move: tuple[int, int], direction: str):
         new_position: tuple[int, int] = (
             object_to_move[0] + direction_to_vector(direction)[0],
