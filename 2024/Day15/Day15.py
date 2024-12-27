@@ -27,128 +27,114 @@ def transform_input(input_lines: list[str]) -> list[str]:
     return new_lines
 
 
-def plot_school(objects: dict[tuple[int, int], str], limits: tuple[int, int]) -> None:
-    for x in range(limits[0]):
-        for y in range(limits[1]):
-            print(objects.get((x, y), '.'), end='')
-        print()
-
-
-submarine: tuple[int, int] = (0, 0)
-
-
-def can_move(object_to_move: tuple[int, int], direction: str, objects: dict[tuple[int, int], str]) -> bool:
-    direction_vector: dict[str, tuple[int, int]] = {
+def direction_to_vector(direction: str) -> tuple[int, int]:
+    return {
         '>': (0, 1),
         '<': (0, -1),
         '^': (-1, 0),
         'v': (1, 0)
-    }
+    }[direction]
 
-    next_object: tuple[int, int] = (
-        object_to_move[0] + direction_vector[direction][0],
-        object_to_move[1] + direction_vector[direction][1]
-    )
 
-    if objects.get(next_object, '.') == '#':
-        return False
+class Warehouse:
+    def __init__(self, warehouse_map: list[str]):
+        self.max_x: int = len(warehouse_map)
+        self.max_y: int = len(warehouse_map[0])
+        self.objects: dict[tuple[int, int], str] = {}
+        for i, line in enumerate(warehouse_map):
+            for j, obj in enumerate(line):
+                if obj == '@':
+                    self.submarine = (i, j)
+                if obj != '.':
+                    self.objects[(i, j)] = obj
 
-    if objects.get(next_object, '.') in ('[', ']'):
-        if direction in ('>', '<'):
-            return can_move(next_object, direction, objects)
 
-        next_object_pair: tuple[int, int] = (
-            next_object[0],
-            next_object[1] + (1 if objects.get(next_object, '.') == '[' else -1)
+    def __getitem__(self, item: tuple[int, int]) -> str:
+        return self.objects.get(item, '.')
+
+
+    def can_move(self, object_to_move: tuple[int, int], direction: str):
+        new_position: tuple[int, int] = (
+            object_to_move[0] + direction_to_vector(direction)[0],
+            object_to_move[1] + direction_to_vector(direction)[1]
         )
-        return can_move(next_object, direction, objects) and can_move(next_object_pair, direction, objects)
+        other_object: str = self.objects.get(new_position, '.')
 
+        if other_object == 'O':
+            return self.can_move(new_position, direction)
 
-    if objects.get(next_object, '.') == 'O' and can_move(next_object, direction, objects):
-        return True
+        if other_object in ('[', ']'):
+            if direction in ('>', '<'):
+                return self.can_move(new_position, direction)
 
-    if objects.get(next_object, '.') == '.':
-        return True
-
-
-def move_object(object_to_move: tuple[int, int], direction: str, objects: dict[tuple[int, int], str]) -> None:
-    global submarine
-    direction_vector: dict[str, tuple[int, int]] = {
-        '>': (0, 1),
-        '<': (0, -1),
-        '^': (-1, 0),
-        'v': (1, 0)
-    }
-
-    next_object: tuple[int, int] = (
-        object_to_move[0] + direction_vector[direction][0],
-        object_to_move[1] + direction_vector[direction][1]
-    )
-
-    if objects.get(next_object, '.') == '#':
-        return
-
-    if objects.get(next_object, '.') in ('[', ']'):
-        if direction in ('>', '<'):
-            move_object(next_object, direction, objects)
-            objects[next_object] = objects[object_to_move]
-            objects[object_to_move] = '.'
-        else:
-            next_object_pair: tuple[int, int] = (
-                next_object[0],
-                next_object[1] + (1 if objects.get(next_object, '.') == '[' else -1)
+            new_position_pair: tuple[int, int] = (
+                new_position[0],
+                new_position[1] + (1 if other_object == '[' else -1)
             )
-            move_object(next_object, direction, objects)
-            move_object(next_object_pair, direction, objects)
-            objects[next_object] = objects[object_to_move]
-            objects[object_to_move] = '.'
-        if object_to_move == submarine:
-            submarine = next_object
+            return self.can_move(new_position, direction) and self.can_move(new_position_pair, direction)
 
-    if objects.get(next_object, '.') == 'O' and can_move(next_object, direction, objects):
-        move_object(next_object, direction, objects)
-        objects[next_object] = objects[object_to_move]
-        objects[object_to_move] = '.'
-        if object_to_move == submarine:
-            submarine = next_object
+        return other_object == '.'
 
 
-    if objects.get(next_object, '.') == '.':
-        objects[next_object] = objects[object_to_move]
-        objects[object_to_move] = '.'
-        if object_to_move == submarine:
-            submarine = next_object
+    def move_object(self, object_to_move, direction: str) -> None:
+        new_position: tuple[int, int] = (
+            object_to_move[0] + direction_to_vector(direction)[0],
+            object_to_move[1] + direction_to_vector(direction)[1]
+        )
+        other_object: str = self.objects.get(new_position, '.')
 
+        if other_object == 'O':
+            self.move_object(new_position, direction)
+
+        if other_object in ('[', ']'):
+            self.move_object(new_position, direction)
+            if direction in ('^', 'v'):
+                new_position_pair: tuple[int, int] = (
+                    new_position[0],
+                    new_position[1] + (1 if other_object == '[' else -1)
+                )
+                self.move_object(new_position_pair, direction)
+
+        self.objects[new_position] = self.objects.get(object_to_move)
+        del self.objects[object_to_move]
+
+
+    def move_submarine(self, direction: str) -> None:
+        if self.can_move(self.submarine, direction):
+            self.move_object(self.submarine, direction)
+            self.submarine = (
+                self.submarine[0] + direction_to_vector(direction)[0],
+                self.submarine[1] + direction_to_vector(direction)[1]
+            )
+
+
+    def plot_warehouse(self) -> None:
+        for x in range(self.max_x):
+            for y in range(self.max_y):
+                print(self.objects.get((x, y), '.'), end='')
+            print()
+
+
+    def gps_sum(self) -> int:
+        gps_sum: int = 0
+
+        for position, item in self.objects.items():
+            if item in ('O', '['):
+                gps_sum += 100 * position[0] + position[1]
+
+        return gps_sum
 
 
 def sum_of_gps_coordinates(input_lines: list[str]) -> int:
-    global submarine
-    index: int = 0
-    objects: dict[tuple[int, int], str] = {}
-    while input_lines[index] != '':
-        for i, obj in enumerate(input_lines[index]):
-            objects[(index, i)] = obj
-            if obj == '@':
-                submarine = (index, i)
-        index += 1
-
-    max_x, max_y = index, len(input_lines[0])
-    index += 1
+    index: int = input_lines.index('') + 1
+    warehouse: Warehouse = Warehouse(input_lines[:index])
 
     while index < len(input_lines):
         for direction in input_lines[index]:
-            if can_move(submarine, direction, objects):
-                move_object(submarine, direction, objects)
+            warehouse.move_submarine(direction)
         index += 1
 
-    gps_sum: int = 0
-    for x in range(max_x):
-        for y in range(max_y):
-            if objects.get((x, y), '.') in ('O', '['):
-                gps_sum += 100 * x + y
-
-    return gps_sum
-
+    return warehouse.gps_sum()
 
 
 def main() -> None:
