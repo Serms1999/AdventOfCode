@@ -32,18 +32,16 @@ def dijkstra(input_lines: list[str]) -> tuple[int, set[tuple[int, int]]]:
     previous_cells: dict[tuple[tuple[int, int], int], set[tuple[tuple[int, int], int]]] = {}
     start: tuple[int, int] = (0, 0)
     end: tuple[int, int] = (0, 0)
-    for i in range(len(input_lines)):
-        for j in range(len(input_lines[i])):
-            if input_lines[i][j] != '#':
-                if input_lines[i][j] == 'S':
-                    start = (i, j)
-                elif input_lines[i][j] == 'E':
-                    end = (i, j)
+    for i, line in enumerate(input_lines):
+        for j, char in enumerate(line):
+            if char == 'S':
+                start = (i, j)
+            elif char == 'E':
+                end = (i, j)
 
-    queue: list[tuple[int, tuple[int, int], int]] = []
-    heappush(queue, (0, start, 0))
-    best_cost: int | float = inf
-    end_states: set[tuple[int, int], int] = set()
+    queue: list[tuple[int, tuple[int, int], int]] = [(0, start, 0)]
+    lowest_distance: int | float = inf
+    end_cells: set[tuple[tuple[int, int], int]] = set()
 
     while queue:
         current_distance, current_cell, current_direction = heappop(queue)
@@ -51,23 +49,23 @@ def dijkstra(input_lines: list[str]) -> tuple[int, set[tuple[int, int]]]:
             continue
         distances[(current_cell, current_direction)] = current_distance
         if current_cell == end:
-            if current_distance > best_cost:
+            if current_distance > lowest_distance:
                 continue
-            best_cost = current_distance
-            end_states.add((current_cell, current_direction))
+            lowest_distance = current_distance
+            end_cells.add((current_cell, current_direction))
         for neighbor_distance, neighbor_cell, neighbor_direction in get_neighbors(current_cell, current_direction):
             if input_lines[neighbor_cell[0]][neighbor_cell[1]] == '#':
                 continue
-            if current_distance + neighbor_distance > distances.get((neighbor_cell, neighbor_direction), inf):
-                continue
-            if current_distance + neighbor_distance < distances.get((neighbor_cell, neighbor_direction), inf):
-                distances[(neighbor_cell, neighbor_direction)] = current_distance + neighbor_distance
+            new_distance = current_distance + neighbor_distance
+            current_neighbor_distance = distances.get((neighbor_cell, neighbor_direction), inf)
+            if new_distance < current_neighbor_distance:
+                distances[(neighbor_cell, neighbor_direction)] = new_distance
                 previous_cells[(neighbor_cell, neighbor_direction)] = {(current_cell, current_direction)}
-            elif current_distance + neighbor_distance == distances.get((neighbor_cell, neighbor_direction), inf):
+                heappush(queue, (new_distance, neighbor_cell, neighbor_direction))
+            elif new_distance == current_neighbor_distance:
                 previous_cells[(neighbor_cell, neighbor_direction)].add((current_cell, current_direction))
-            heappush(queue, (current_distance + neighbor_distance, neighbor_cell, neighbor_direction))
 
-    stack: list[tuple[tuple[int, int], int]] = list(end_states)
+    stack: list[tuple[tuple[int, int], int]] = list(end_cells)
     cells: set[tuple[int, int]] = {end}
     while stack:
         cell = stack.pop(-1)
@@ -76,7 +74,7 @@ def dijkstra(input_lines: list[str]) -> tuple[int, set[tuple[int, int]]]:
                 stack.append(previous_cell)
                 cells.add(previous_cell[0])
 
-    return best_cost, cells
+    return lowest_distance, cells
 
 def maze_score(input_lines: list[str]) -> int:
     return dijkstra(input_lines)[0]
