@@ -32,7 +32,7 @@ Collect stars by solving puzzles. Two puzzles will be made available on each day
 | 16  | :white_check_mark:      | :white_check_mark:      | [Day 16](Day16) | [Day 16](https://adventofcode.com/2024/day/16) |
 | 17  | :white_check_mark:      | :white_check_mark:      | [Day 17](Day17) | [Day 17](https://adventofcode.com/2024/day/17) |
 | 18  | :white_check_mark:      | :white_check_mark:      | [Day 18](Day18) | [Day 18](https://adventofcode.com/2024/day/18) |
-| 19  | :ballot_box_with_check: | :ballot_box_with_check: |                 | [Day 19](https://adventofcode.com/2024/day/19) |
+| 19  | :white_check_mark:      | :white_check_mark:      | [Day 19](Day19) | [Day 19](https://adventofcode.com/2024/day/19) |
 | 20  | :ballot_box_with_check: | :ballot_box_with_check: |                 | [Day 20](https://adventofcode.com/2024/day/20) |
 | 21  | :ballot_box_with_check: | :ballot_box_with_check: |                 | [Day 21](https://adventofcode.com/2024/day/21) |
 | 22  | :ballot_box_with_check: | :ballot_box_with_check: |                 | [Day 22](https://adventofcode.com/2024/day/22) |
