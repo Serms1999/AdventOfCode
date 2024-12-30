@@ -66,17 +66,14 @@ In the above example, if you were to draw the memory space after the first `12` 
 
 You can take steps up, down, left, or right. After just 12 bytes have corrupted locations in your memory space, the shortest path from the top left corner to the exit would take **`22`** steps. Here (marked with `O`) is one such path:
 
-
-
-```
-**O****O**.#**O****O****O**
-.**O**#**O****O**#**O**
-.**O****O****O**#**O****O**
-...#**O****O**#
-..#**O****O**#.
-.#.**O**#..
-#.#**O****O****O****O**
-```
+<pre><code><b>O</b><b>O</b>.#<b>O</b><b>O</b><b>O</b>
+.<b>O</b>#<b>O</b><b>O</b>#<b>O</b>
+.<b>O</b><b>O</b><b>O</b>#<b>O</b><b>O</b>
+...#<b>O</b><b>O</b>#
+..#<b>O</b><b>O</b>#.
+.#.<b>O</b>#..
+#.#<b>O</b><b>O</b><b>O</b><b>O</b>
+</code></pre>
 
 Simulate the first kilobyte (`1024` bytes) falling onto your memory space. Afterward, **what is the minimum number of steps needed to reach the exit?**
 
@@ -91,31 +88,25 @@ To determine how fast everyone needs to go, you need to determine **the first by
 
 In the above example, after the byte at `1,1` falls, there is still a path to the exit:
 
-
-
-```
-**O**..#**O****O****O**
-**O**##**O****O**#**O**
-**O**#**O****O**#**O****O**
-**O****O****O**#**O****O**#
-###**O****O**##
-.##**O**###
-#.#**O****O****O****O**
-```
+<pre><code><b>O</b>..#<b>O</b><b>O</b><b>O</b>
+<b>O</b>##<b>O</b><b>O</b>#<b>O</b>
+<b>O</b>#<b>O</b><b>O</b>#<b>O</b><b>O</b>
+<b>O</b><b>O</b><b>O</b>#<b>O</b><b>O</b>#
+###<b>O</b><b>O</b>##
+.##<b>O</b>###
+#.#<b>O</b><b>O</b><b>O</b><b>O</b>
+</code></pre>
 
 However, after adding the very next byte (at `6,1`), there is no longer a path to the exit:
 
-
-
-```
-...#...
-.##..#**#**
+<pre><code>...#...
+.##..#<b>#</b>
 .#..#..
 ...#..#
 ###..##
 .##.###
 #.#....
-```
+</code></pre>
 
 So, in this example, the coordinates of the first byte that prevents the exit from being reachable are **`6,1`**.
 
